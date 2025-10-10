@@ -1,0 +1,1 @@
+insert into rooms (number, available, beds) values (101, true, 2), (102, true, 2), (103, true, 4), (201, true, 2), (202, true, 2), (203, true, 4);
