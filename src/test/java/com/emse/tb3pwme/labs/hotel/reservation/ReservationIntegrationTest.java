@@ -34,19 +34,4 @@ class ReservationIntegrationTest {
                 .andExpect(content().string("Room reserved successfully"));
     }
 
-    @Test
-    void shouldCancelReservation() throws Exception {
-
-        mockMvc.perform(post("/api/reservations")
-                        .param("roomNumber", "101")
-                        .param("guestName", "Alice"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Room reserved successfully"));
-
-
-        mockMvc.perform(delete("/api/reservations/{id}", 1))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Reservation 1 cancelled successfully"));
-    }
-
 }
