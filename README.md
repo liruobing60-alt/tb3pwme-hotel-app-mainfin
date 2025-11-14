@@ -1,34 +1,162 @@
-# Lab 1: Hotel App
+# Hotel Reservation API – Build Tool Demonstration Project
 
-Welcome to this first lab.
+This project is a simple Spring Boot application exposing a REST API for managing hotel room reservations. It is used in this assignment to demonstrate how to set up, configure, and document a modern build tool (Gradle) within a non-trivial Java project.
 
-The application is a simple implementation of a REST API for booking a hotel room.
-The objective of the lab is to:
+---
 
-* Improve your understanding of unit testing,
-* Discover some new tools (native queries, H2 console)
-* Practice with the annotations already seen in class.
+## 1. Project Overview
 
-## Unit tests
+The application includes:
 
-You must implement the methods of the `com.emse.tb3pwme.labs.hotel.reservation.RoomTest` class, using JUnit and AssertJ.
+- REST endpoints to create, list, and cancel reservations
+- A domain layer (Room, Reservation, ReservationNumberGenerator)
+- A persistence layer using Spring Data JPA
+- Database initialization through `schema.sql` and `data.sql`
+- Unit and integration tests using JUnit and AssertJ
+- An in-memory H2 database
 
-## Missing annotations
+This codebase was originally provided as part of a lab exercise. For this build-tool assignment, I focused on:
 
-I have removed the annotations in `ReservationController`, `RoomEntity`, and `ReservationEntity`, but the system is sufficiently constrained that you can reverse engineer the values I had chosen.
-It's up to you to put them back.
+- Ensuring the Gradle build is fully functional
+- Documenting how to build, test, and run the project
+- Verifying dependency management and packaging
+- Providing a clear and reproducible setup through Gradle Wrapper
 
-## New tools
+---
 
-Look at the `com.emse.tb3pwme.labs.hotel.reservation.persistence.ReservationRepository` interface.
-What is the `Long getNextReservationNumber()` method used for?
+## 2. Build Tool: Gradle
 
-Find the information you need to log in at http://localhost:8080/h2-console.
-How many rooms are there in the hotel?
+This project uses **Gradle Kotlin DSL** (`build.gradle.kts`).
 
-Write your comments in ANSWERS.md at the root of the project.
+Gradle is used to automate:
 
-## Code the cancellation of a reservation
+### ✔ Dependency Management
 
-As with the reservation, add the code needed to delete a reservation by its ID.
-Remember to test this implementation in the domain.
+Dependencies such as Spring Boot Starter Web, Spring Boot Starter JPA, H2 Database, Lombok, JUnit, and AssertJ are declared in `build.gradle.kts`.
+
+### ✔ Compilation
+
+Gradle automatically compiles the Java source code under:
+- `src/main/java`
+- `src/test/java`
+
+### ✔ Testing
+
+All unit and integration tests run with:
+
+```bash
+./gradlew test
+```
+
+### ✔ Packaging
+
+Gradle builds an executable **Spring Boot fat JAR**:
+
+```bash
+./gradlew build
+```
+
+The final JAR is generated under:
+
+```
+build/libs/
+```
+
+---
+
+## 3. How to Build the Project
+
+### Build the application:
+
+```bash
+./gradlew build
+```
+
+### Run all tests:
+
+```bash
+./gradlew test
+```
+
+(Build succeeds only if tests pass.)
+
+---
+
+## 4. How to Run the Application
+
+Start the Spring Boot server:
+
+```bash
+./gradlew bootRun
+```
+
+The API is available at:
+
+```
+http://localhost:8080
+```
+
+---
+
+## 5. Database (H2 Console)
+
+During runtime, you can access the in-memory H2 database at:
+
+```
+http://localhost:8080/h2-console
+```
+
+Default connection properties:
+
+- **JDBC URL:** `jdbc:h2:mem:testdb`
+- **User:** `sa`
+- **Password:** (empty)
+
+---
+
+## 6. Project Structure
+
+```
+src/
+ └── main/
+     ├── java/com/emse/tb3pwme/labs/hotel/reservation/
+     │   ├── domain/
+     │   │   ├── Room.java
+     │   │   ├── Reservation.java
+     │   │   └── ReservationNumberGenerator.java
+     │   ├── persistence/
+     │   │   ├── RoomEntity.java
+     │   │   ├── RoomRepository.java
+     │   │   ├── ReservationEntity.java
+     │   │   └── ReservationRepository.java
+     │   └── web/
+     │       ├── RoomRepresentation.java
+     │       ├── ReservationRepresentation.java
+     │       ├── ReservationController.java
+     │       ├── ReservationService.java
+     │       └── HotelAppApplication.java
+     └── resources/
+         ├── application.properties
+         ├── schema.sql
+         └── data.sql
+
+test/
+ └── java/com/emse/tb3pwme/labs/hotel/reservation/
+     ├── RoomTest.java
+     ├── CancelReservationTest.java
+     ├── ReservationIntegrationTest.java
+     └── HotelAppApplicationTests.java
+```
+
+---
+
+## 7. Dependencies (from build.gradle.kts)
+
+Main dependencies include:
+
+- `org.springframework.boot:spring-boot-starter-web`
+- `org.springframework.boot:spring-boot-starter-data-jpa`
+- `com.h2database:h2`
+- `org.projectlombok:lombok`
+- `org.springframework.boot:spring-boot-starter-test`
+- `org.assertj:assertj-core`
