@@ -162,6 +162,7 @@ Main dependencies include:
 - `org.assertj:assertj-core`
 
 
+
 ## Static Code Analysis (Checkstyle)
 
 This project uses **Checkstyle** for static code analysis.

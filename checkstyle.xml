@@ -5,7 +5,6 @@
 
 <module name="Checker">
     <module name="TreeWalker">
-
         <module name="Indentation"/>
         <module name="UnusedImports"/>
         <module name="AvoidStarImport"/>
@@ -19,6 +18,5 @@
         <module name="LocalVariableName"/>
         <module name="MethodName"/>
         <module name="ParameterName"/>
-
     </module>
 </module>
