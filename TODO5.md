@@ -16,3 +16,35 @@ This project uses **Checkstyle** for static code analysis.
 - Open the Command Palette and run **"Checkstyle: Check Code"**.
 
 The current configuration checks indentation, unused imports, braces, naming conventions, and other basic style rules.
+
+---
+
+## Pre-commit Hook (Static Code Analysis)
+
+This project includes a **pre-commit hook** that automatically runs static code analysis.
+
+### Configuration file
+
+* `.pre-commit-config.yaml`
+
+### How to set up
+
+1. Install the tool:
+
+   ```bash
+   pip install pre-commit
+   ```
+2. In the project root directory, run:
+
+   ```bash
+   pre-commit install
+   ```
+3. The hook will now run automatically before every `git commit`.
+
+### Explanation
+
+* The hook runs `./gradlew.bat check` to perform static code analysis.
+* If the analysis fails, the commit is blocked.
+* If it passes, the commit succeeds normally.
+
+---
